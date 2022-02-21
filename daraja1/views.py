@@ -1,3 +1,4 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.conf import settings
 import logging
@@ -16,3 +17,15 @@ def index(request):
         'logs': logs
     }
     return render(request, 'index.html', context=page_context)
+
+def clear_logs(request):
+    '''
+    clearing  application logs
+    '''
+    Log.objects.all().delete()
+    home_url = reverse('index')
+    response = '<p>Logs cleared.</p> <a href="' + home_url + '">Back Home</a>'
+    
+    return HttpResponse(response)
+
+
