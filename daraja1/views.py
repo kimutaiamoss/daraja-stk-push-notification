@@ -28,4 +28,28 @@ def clear_logs(request):
     
     return HttpResponse(response)
 
+def view_logs(request):
+	'''
+	View application logs
+	'''
+
+	# Select 50 most recent logs
+	log_items = Log.objects.all()[:50]
+
+	logs = []
+	for log in log_items:
+		description = '{}' if log.description == "" else log.description
+		try:
+			description = json.loads(description)
+		except (Exception):
+			pass
+
+		l = {
+			'time': log.date_created,
+			'description': log.title,
+			'content': description
+		}
+		logs.append(l)
+
+	return JsonResponse(logs, safe=False)
 
