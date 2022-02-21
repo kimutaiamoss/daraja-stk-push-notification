@@ -1,55 +1,57 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from django_daraja.mpesa import utils
+
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.conf import settings
-import logging
-import json
-from django.urls import reverse
-from .models import Log
-# Create your views here.
-#getting logger instance
-logger = logging.getLogger('daraja')
+from django.views.generic import View
+from django_daraja.mpesa.core import MpesaClient
+from decouple import config
+from datetime import datetime
 
-
+cl = MpesaClient()
+stk_push_callback_url = 'https://darajambili.herokuapp.com/express-payment'
+b2c_callback_url = 'https://darajambili.herokuapp.com/b2c/result'
 
 def index(request):
-    logs = Log.objects.all()[:50]
-    page_context = {
-        'logs': logs
-    }
-    return render(request, 'index.html', context=page_context)
 
-def clear_logs(request):
-    '''
-    clearing  application logs
-    '''
-    Log.objects.all().delete()
-    home_url = reverse('index')
-    response = '<p>Logs cleared.</p> <a href="' + home_url + '">Back Home</a>'
-    
-    return HttpResponse(response)
+	return HttpResponse('Welcome to mpesa stk push notification')
 
-def view_logs(request):
-	'''
-	View application logs
-	'''
+def oauth_success(request):
+	r = cl.access_token()
+	return JsonResponse(r, safe=False)
 
-	# Select 50 most recent logs
-	log_items = Log.objects.all()[:50]
+def stk_push_success(request):
+	phone_number = config('LNM_PHONE_NUMBER')
+	amount = 1
+	account_reference = 'ABC001'
+	transaction_desc = 'STK Push Description'
+	callback_url = stk_push_callback_url
+	r = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+	return JsonResponse(r.response_description, safe=False)
 
-	logs = []
-	for log in log_items:
-		description = '{}' if log.description == "" else log.description
-		try:
-			description = json.loads(description)
-		except (Exception):
-			pass
+def business_payment_success(request):
+	phone_number = config('B2C_PHONE_NUMBER')
+	amount = 1
+	transaction_desc = 'Business Payment Description'
+	occassion = 'Test business payment occassion'
+	callback_url = b2c_callback_url
+	r = cl.business_payment(phone_number, amount, transaction_desc, callback_url, occassion)
+	return JsonResponse(r.response_description, safe=False)
 
-		l = {
-			'time': log.date_created,
-			'description': log.title,
-			'content': description
-		}
-		logs.append(l)
+def salary_payment_success(request):
+	phone_number = config('B2C_PHONE_NUMBER')
+	amount = 1
+	transaction_desc = 'Salary Payment Description'
+	occassion = 'Test salary payment occassion'
+	callback_url = b2c_callback_url
+	r = cl.salary_payment(phone_number, amount, transaction_desc, callback_url, occassion)
+	return JsonResponse(r.response_description, safe=False)
 
-	return JsonResponse(logs, safe=False)
-
+def promotion_payment_success(request):
+	phone_number = config('B2C_PHONE_NUMBER')
+	amount = 1
+	transaction_desc = 'Promotion Payment Description'
+	occassion = 'Test promotion payment occassion'
+	callback_url = b2c_callback_url
+	r = cl.promotion_payment(phone_number, amount, transaction_desc, callback_url, occassion)
+	return JsonResponse(r.response_description, safe=False)

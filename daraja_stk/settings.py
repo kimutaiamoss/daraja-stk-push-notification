@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'daraja1',
+    'django_daraja',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,7 +81,7 @@ DATABASES = {
         'NAME': 'daraja',
         'USER':'moringa',
         'password':'1234',
-        
+
     }
 }
 
