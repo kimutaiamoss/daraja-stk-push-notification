@@ -32,7 +32,7 @@ def stk_push_success(request):
 def business_payment_success(request):
 	phone_number = config('B2C_PHONE_NUMBER')
 	amount = 1
-	transaction_desc = 'Business Payment Description'
+	transaction_desc = 'kJ COMPUTERS'
 	occassion = 'Test business payment occassion'
 	callback_url = b2c_callback_url
 	r = cl.business_payment(phone_number, amount, transaction_desc, callback_url, occassion)
