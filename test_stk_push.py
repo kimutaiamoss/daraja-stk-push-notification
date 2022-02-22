@@ -12,7 +12,7 @@ from django_daraja.mpesa.utils import sleep
 class MpesaStkPushTestCase(TestCase):
 
 	cl = MpesaClient()
-	callback_url = 'https://darajambili.herokuapp.com/express-payment'
+	callback_url = 'https://darajapi.herokuapp.com/express-payment'
 
 	def test_stk_push_success(self):
 		'''

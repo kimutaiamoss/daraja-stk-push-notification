@@ -12,4 +12,4 @@ class MpesaCoreTestCase(TestCase):
 		'''
 		
 		response = self.client.get(reverse("django_daraja_index"))
-		self.assertEqual(response.content, b"Welcome to the home of daraja APIs")
+		self.assertEqual(response.content, b"Welcome to mpesa stk push notification")

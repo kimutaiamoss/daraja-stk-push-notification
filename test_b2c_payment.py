@@ -12,7 +12,7 @@ from django_daraja.mpesa.utils import sleep
 class MpesaB2CPaymentTestCase(TestCase):
 
 	cl = MpesaClient()
-	callback_url = 'https://darajambili.herokuapp.com/express-payment'
+	callback_url = '  https://darajapi.herokuapp.com/express-payment'
 	success_description = 'Accept the service request successfully.'
 
 	def test_business_payment_success(self):
