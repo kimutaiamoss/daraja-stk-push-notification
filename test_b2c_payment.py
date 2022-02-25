@@ -37,7 +37,6 @@ class MpesaB2CPaymentTestCase(TestCase):
 		
 		# Wait for a short while (to avoid SpikeArrest)
 		sleep(20, 'Test salary payment success')
-
 		phone_number = config('B2C_PHONE_NUMBER')
 		amount = 1
 		transaction_desc = 'Description'
