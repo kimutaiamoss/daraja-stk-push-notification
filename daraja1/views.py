@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django_daraja.mpesa import utils
+from django.shortcuts import render
 
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
@@ -14,8 +15,8 @@ b2c_callback_url = 'https://darajapi.herokuapp.com/b2c/result'
 
 def index(request):
 
-	return HttpResponse('Welcome to mpesa stk push notification')
-
+	# return HttpResponse('Welcome to mpesa stk push notification')
+	return render(request,'home.html')
 def oauth_success(request):
 	r = cl.access_token()
 	return JsonResponse(r, safe=False)
