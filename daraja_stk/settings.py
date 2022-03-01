@@ -62,6 +62,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 INSTALLED_APPS = [
     'daraja1',
+    'dashboard',
     'bootstrap3',
     'django_daraja',
     'django.contrib.admin',
